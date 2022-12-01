@@ -1,7 +1,7 @@
-class Day01 {
-    fun part1(input: List<String>) = inventories(input).maxOf { it.sum() }
+class Day01 : Parts {
+    override fun part1(input: List<String>) = inventories(input).maxOf { it.sum() }
 
-    fun part2(input: List<String>) = inventories(input).sortedByDescending { it.sum() }.take(3).flatten().sum()
+    override fun part2(input: List<String>) = inventories(input).sortedByDescending { it.sum() }.take(3).flatten().sum()
 
     private fun inventories(input: List<String>): List<List<Int>> {
         var inventoryIndex = 0
