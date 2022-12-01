@@ -1,43 +1,25 @@
 class Day01 {
     fun part1(input: List<String>): Int {
-        var max = 0
-        var current = 0
 
-        for(calorie in input){
-
-            if(calorie.isNotEmpty()){
-                current += calorie.toInt()
-                if(current > max){
-                    max = current
-                }
-            }else{
-                current = 0
-            }
-
-        }
-        return  max
+        return inventories(input).maxOf { it.sum() }
     }
-
     fun part2(input: List<String>): Int {
-        val maxs = mutableMapOf(1 to 0, 2 to 0, 3 to 0)
-        var current = 0
-        var min = maxs.minBy { it.value }
-
-        for (calorie in input) {
-            if(calorie.isNotEmpty()){
-                current += calorie.toInt()
-                val max = if (current > min.value){
-                    current
-                }else min.value
-                maxs[min.key] = max
-            }else {
-                min = maxs.minBy { it.value }
-                current = 0
+        return inventories(input).sortedByDescending { it.sum() }.take(3).flatten().sum()
+    }
+    private fun inventories(input: List<String>): List<List<Int>> {
+        var inventoryIndex = 0
+        val inventories = mutableMapOf<Int, List<Int>>()
+        val inventory = mutableListOf<Int>()
+        for (calories in input) {
+            if (calories.isNotEmpty()) {
+                inventory.add(calories.toInt())
+                inventories[inventoryIndex] = inventory.toList()
+            } else {
+                inventory.clear()
+                inventoryIndex++
             }
         }
-
-
-        return  maxs.values.sum()
+        return inventories.map { it.value }
     }
 }
 
