@@ -23,7 +23,7 @@ fun main() {
         var current = 0
         var min = maxs.minBy { it.value }
         input.forEachIndexed { index, calorie ->
-            if(index == 0 || calorie.isNotEmpty()){
+            if(calorie.isNotEmpty()){
                 current += calorie.toInt()
                 val max = if (current > min.value){
                     current
