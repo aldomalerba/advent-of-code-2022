@@ -1,33 +1,26 @@
-class Day01 : Parts {
-    override fun part1(input: List<String>) = inventories(input).maxOf { it.sum() }
+import java.io.FileNotFoundException
 
-    override fun part2(input: List<String>) = inventories(input).sortedByDescending { it.sum() }.take(3).flatten().sum()
+typealias Inventory = List<Int>
+class Day01: Parts {
+    override fun part1(input: String) =
+        inventories(input).maxOf { it.sum() }
 
-    private fun inventories(input: List<String>): List<List<Int>> {
-        var inventoryIndex = 0
-        val inventories = mutableMapOf<Int, List<Int>>()
-        val inventory = mutableListOf<Int>()
-        for (calories in input) {
-            if (calories.isNotEmpty()) {
-                inventory.add(calories.toInt())
-                inventories[inventoryIndex] = inventory.toList()
-            } else {
-                inventory.clear()
-                inventoryIndex++
-            }
-        }
-        return inventories.map { it.value }
+    override fun part2(input: String) =
+        inventories(input).sortedByDescending { it.sum() }.take(3).flatten().sum()
+
+    private fun inventories(input: String): List<Inventory> {
+        return input.split("\n\n").map { it.split("\n").map { calories -> calories.toInt()  }}
     }
+
 }
 
 fun main() {
     val day = Day01()
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(day.part1(testInput) == 24000)
-    check(day.part2(testInput) == 45000)
-
-    val input = readInput("Day01")
-    println(day.part1(input))
-    println(day.part2(input))
+    try {
+        val input = readText("Day01")
+        println(day.part1(input))
+        println(day.part2(input))
+    }catch (e: FileNotFoundException){
+        println("Day01 file needs to be created in the src folder.")
+    }
 }

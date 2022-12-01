@@ -1,17 +1,17 @@
-class Day02 : Parts {
-    override fun part1(input: List<String>) = input.size
+import java.io.FileNotFoundException
 
-    override fun part2(input: List<String>) = input.size
+class Day02: Parts{
+    override fun part1(input: String) = 1
+    override fun part2(input: String) = 2
 }
 
 fun main() {
     val day = Day02()
-    // test if implementation meets criteria from the description, like:
-    val testInput = readInput("Day01_test")
-    check(day.part1(testInput) == 1)
-    check(day.part2(testInput) == 1)
-
-    val input = readInput("Day01")
-    println(day.part1(input))
-    println(day.part2(input))
+    try {
+        val input = readText("Day02")
+        println(day.part1(input))
+        println(day.part2(input))
+    }catch (e: FileNotFoundException){
+        println("Day02 file needs to be created in the src folder.")
+    }
 }
