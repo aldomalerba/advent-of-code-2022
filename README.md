@@ -12,7 +12,7 @@ In this repository, I'm is about to provide solutions for the Advent of Code[^ao
 | :calendar: :christmas_tree: | :one: |        :two:        |            :computer:             |
 |:---------------------------:|:-----:|:-------------------:|:---------------------------------:|
 |            Day 1            | :white_check_mark: | :white_check_mark: | [Source](src/main/kotlin/Day01.kt) |
-|            Day 2            ||   |  |
+|            Day 2            | :white_check_mark: | :white_check_mark: | [Source](src/main/kotlin/Day02.kt) |
 |            Day 3            |       |   |  |
 |            Day 4            |       |   |  |
 |            Day 5            |       |   |  |
