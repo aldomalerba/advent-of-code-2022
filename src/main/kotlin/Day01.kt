@@ -9,7 +9,7 @@ class Day01: Parts {
         inventories(input).sortedByDescending { it.sum() }.take(3).flatten().sum()
 
     private fun inventories(input: String): List<Inventory> {
-        return input.split("\n\n").map { it.split("\n").map { calories -> calories.toInt()  }}
+        return input.split("\n\n").map { it.split("\n").map { calories -> calories.trim().toInt()  }}
     }
 
 }

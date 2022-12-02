@@ -10,8 +10,9 @@ class Day02Test{
 
         val result = day.part1(input)
 
-         assertEquals(1, result)
+         assertEquals(15, result)
     }
+
 
     @Test
     fun `part 2`() {
@@ -19,6 +20,6 @@ class Day02Test{
 
         val result = day.part2(input)
 
-        assertEquals(2, result)
+        assertEquals(12, result)
     }
 }
