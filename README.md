@@ -1,6 +1,6 @@
 # advent-of-code-2022
 
-In this repository, I'm is about to provide solutions for the Advent of Code[^aoc] using Kotlin language.
+In this repository, I'm about to provide solutions for the Advent of Code[^aoc] using Kotlin language.
 
 [^aoc]:
     [Advent of Code][aoc] – An annual event of Christmas-oriented programming challenges started December 2015.
