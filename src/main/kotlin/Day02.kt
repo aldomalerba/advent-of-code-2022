@@ -1,52 +1,42 @@
 import java.io.FileNotFoundException
 
 class Day02: Parts{
-    val wins = listOf("A Y", "B Z", "C X")
-    val draws = listOf("A X", "B Y", "C Z")
-    val loses = mapOf('A' to 'Z', 'B' to 'X', 'C' to 'Y')
 
-    val scores = mapOf('X' to 1, 'Y' to 2, 'Z' to 3)
-    val scoresOpponent = mapOf('A' to 1, 'B' to 2, 'C' to 3)
+    private val wins = mapOf('A' to 'C', 'B' to 'A','C' to 'B')
+    private val draws = mapOf('X' to 'A', 'Y' to 'B', 'Z' to 'C')
+    private val scores = mapOf('A' to 1, 'B' to 2, 'C' to 3)
+
     override fun part1(input: String): Int {
-        val plays = input.split("\n").filter { it.isNotEmpty() }
+        val plays = parsInput(input)
 
         val totScore = plays.map{
-            val opponent = it.first()
-            val myResponse = it.last()
-            //X need to loose
-            //y draw
-            //Z win
+            val myResponse = draws[it.last()]
+            val score = if(it.first() == draws[it.last()]) 3 else if(myResponse != wins[it.first()]) 6 else 0
 
-            val score = if(wins.contains(it)) 6 else if(draws.contains(it)) 3 else 0
-            val point = scores[myResponse]!!
-            score + point
+            score + scores[myResponse]!!
         }
 
         return totScore.sum()
     }
     override fun part2(input: String): Int {
-        val plays = input.split("\n").filter { it.isNotEmpty() }
+        val plays = parsInput(input)
 
         val totScore = plays.map{
             val opponent = it.first()
-            val myResponse = it.last()
-            val score = when(myResponse){
-                'X' -> 0
-                'Y' -> 3
-                else -> 6
+
+            when(it.last()){
+                'X' -> scores[wins[opponent]]!!
+                'Y' -> 3 + scores[opponent]!!
+                else -> 6 + scores[ wins.filterValues { it == opponent }.keys.first()]!!
             }
 
-            val point = when(myResponse){
-                'Y' -> scoresOpponent[opponent]!!
-                'X' -> scores[loses[opponent]]!!
-                else -> scores[wins.single { it.startsWith(opponent) }.last()]!!
-            }
 
-            score + point
         }
 
         return totScore.sum()
     }
+
+    private fun parsInput(input: String) = input.split("\n").filter { it.isNotEmpty() }
 }
 
 fun main() {
