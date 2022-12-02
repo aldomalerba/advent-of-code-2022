@@ -9,34 +9,39 @@ class Day02: Parts{
     override fun part1(input: String): Int {
         val plays = parsInput(input)
 
-        val totScore = plays.map{
-            val myResponse = draws[it.last()]
-            val score = if(it.first() == draws[it.last()]) 3 else if(myResponse != wins[it.first()]) 6 else 0
+        val totScore = plays.sumOf {
+            val myResponse = draws[it.second]
+            val opponent = it.first
+
+            val score = when {
+                opponent == myResponse -> 3
+                wins[opponent] != myResponse -> 6
+                else -> 0
+            }
 
             score + scores[myResponse]!!
         }
 
-        return totScore.sum()
+        return totScore
     }
     override fun part2(input: String): Int {
         val plays = parsInput(input)
 
-        val totScore = plays.map{
-            val opponent = it.first()
+        val totScore = plays.sumOf {
+            val opponent = it.first
 
-            when(it.last()){
+            when (it.second) {
                 'X' -> scores[wins[opponent]]!!
                 'Y' -> 3 + scores[opponent]!!
-                else -> 6 + scores[ wins.filterValues { it == opponent }.keys.first()]!!
+                else -> 6 + scores[wins.filterValues { it == opponent }.keys.first()]!!
             }
-
 
         }
 
-        return totScore.sum()
+        return totScore
     }
 
-    private fun parsInput(input: String) = input.split("\n").filter { it.isNotEmpty() }
+    private fun parsInput(input: String) = input.split("\n").filter { it.isNotEmpty() }.map { it.first() to it.last() }
 }
 
 fun main() {
