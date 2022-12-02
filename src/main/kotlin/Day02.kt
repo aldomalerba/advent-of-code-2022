@@ -7,7 +7,7 @@ class Day02: Parts{
     private val scores = mapOf('A' to 1, 'B' to 2, 'C' to 3)
 
     override fun part1(input: String) = rounds(input).sumOf { roundScorePart1(it) }
-    override fun part2(input: String) = rounds(input).sumOf { roundScoresPart2(it) }
+    override fun part2(input: String) = rounds(input).sumOf { roundScorePart2(it) }
 
     private fun roundScorePart1(it: Pair<Char, Char>): Int {
         val myResponse = draws[it.second]
@@ -22,7 +22,7 @@ class Day02: Parts{
         return score + scores[myResponse]!!
     }
 
-    private fun roundScoresPart2(match: Pair<Char, Char>): Int {
+    private fun roundScorePart2(match: Pair<Char, Char>): Int {
         val opponent = match.first
 
         return when (match.second) {
