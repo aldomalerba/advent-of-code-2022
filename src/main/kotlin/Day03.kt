@@ -6,27 +6,31 @@ class Day03: Parts{
     private val alphabet = "abcdefghijklmnopqrstuvwxyz";
 
     override fun part1(input: String): Int {
-        val rucksacks = input.split("\n")
-        val items = rucksacks.mapNotNull {
-            it.subSequence(0, (it.count()/2)).find {
-                    char -> it.subSequence((it.count()/2), it.count()).contains(char)
-            } }
+
+        val items = rucksacks(input).mapNotNull {
+            val count = it.count()
+            val compartment1 = it.substring(0, (count / 2))
+            val compartment2 = it.substring((count / 2), count)
+
+            listOf(compartment1, compartment2).commonItem()
+        }
 
         return items.sumOf { priority(it) }
     }
+
     override fun part2(input: String): Int {
-        val rucksacks = input.split("\n").windowed(3,3)
+        val elvesGroups = rucksacks(input).windowed(3, 3)
 
-        val items = rucksacks.mapNotNull {
-            it[0].find { char -> it[1].contains(char) && it[2].contains(char) }
-        }
+        val items = elvesGroups.mapNotNull { rucksacks -> rucksacks.commonItem() }
 
-        val scores = items.map { priority(it) }
+        return items.sumOf { priority(it) }
 
-        return scores.sum()
     }
 
-    private fun priority(it: Char) = if (alphabet.contains(it)) alphabet.indexOf(it) + 1 else alphabet.uppercase().indexOf(it) + 27
+    private fun rucksacks(input: String) = input.split("\n")
+    private fun List<String>.commonItem() = this.first().find { char -> this.all { it.contains(char) } }
+    private fun priority(it: Char) =
+        if (alphabet.contains(it)) alphabet.indexOf(it) + 1 else alphabet.uppercase().indexOf(it) + 27
 
 }
 
@@ -36,7 +40,7 @@ fun main() {
         val input = readText("Day03")
         println(day.part1(input))
         println(day.part2(input))
-    }catch (e: FileNotFoundException){
+    } catch (e: FileNotFoundException) {
         println("Day03 file needs to be created in the src folder.")
     }
 }
