@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Assertions.*
 
 class Day03Test {
     private val day = Day03()
-    private val input = readResourceText("Day02_test")
+    private val input = readResourceText("Day03_test")
 
     @Test
     fun `part 1`() {
         val result = day.part1(input)
 
-        assertEquals(1,result)
+        assertEquals(157,result)
     }
 
 
@@ -18,6 +18,6 @@ class Day03Test {
     fun `part 2`() {
         val result = day.part2(input)
 
-        assertEquals(1, result)
+        assertEquals(70, result)
     }
 }

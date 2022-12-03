@@ -9,9 +9,9 @@ class Day02: Parts{
     override fun part1(input: String) = rounds(input).sumOf { roundScorePart1(it) }
     override fun part2(input: String) = rounds(input).sumOf { roundScorePart2(it) }
 
-    private fun roundScorePart1(it: Pair<Char, Char>): Int {
-        val myResponse = draws[it.second]
-        val opponent = it.first
+    private fun roundScorePart1(round: Pair<Char, Char>): Int {
+        val myResponse = draws[round.second]
+        val opponent = round.first
 
         val score = when {
             opponent == myResponse -> 3

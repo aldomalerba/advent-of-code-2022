@@ -1,9 +1,32 @@
 import java.io.FileNotFoundException
+import java.util.*
 
 class Day03: Parts{
 
-    override fun part1(input: String) = 1
-    override fun part2(input: String) = 1
+    private val alphabet = "abcdefghijklmnopqrstuvwxyz";
+
+    override fun part1(input: String): Int {
+        val rucksacks = input.split("\n")
+        val items = rucksacks.mapNotNull {
+            it.subSequence(0, (it.count()/2)).find {
+                    char -> it.subSequence((it.count()/2), it.count()).contains(char)
+            } }
+
+        return items.sumOf { priority(it) }
+    }
+    override fun part2(input: String): Int {
+        val rucksacks = input.split("\n").windowed(3,3)
+
+        val items = rucksacks.mapNotNull {
+            it[0].find { char -> it[1].contains(char) && it[2].contains(char) }
+        }
+
+        val scores = items.map { priority(it) }
+
+        return scores.sum()
+    }
+
+    private fun priority(it: Char) = if (alphabet.contains(it)) alphabet.indexOf(it) + 1 else alphabet.uppercase().indexOf(it) + 27
 
 }
 
