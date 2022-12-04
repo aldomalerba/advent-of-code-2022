@@ -1,37 +1,32 @@
 import java.io.FileNotFoundException
 import kotlin.math.max
 
-class Day04: Parts {
+/**
+ * --- Day 4: Camp Cleanup ---.
+ */
+class Day04 : Parts {
+    override fun part1(input: String) = pairs(input).count(SectionAssignmentPair::fullyContained)
 
-    override fun part1(input: String): Int {
-        return input.split("\n").filter { it.isNotEmpty() }.map {pair ->
-            val pair = pair.split(",")
-            val firstElfSections = pair.first().split("-")
-            val secondElfSections = pair.last().split("-")
+    override fun part2(input: String) = pairs(input).count(SectionAssignmentPair::overlapped)
 
-            val firstElfRange = firstElfSections.first().toInt()..firstElfSections.last().toInt()
-            val secondElfRange = secondElfSections.first().toInt()..secondElfSections.last().toInt()
+    private fun pairs(input: String) = input.split("\n").filter { it.isNotEmpty() }
+        .map {
+            val sections = it.split(",", "-").map(String::toInt)
 
-            val overlapSections = (firstElfRange.toSet() + secondElfRange.toSet()).size
+            val firstElfAssignments = sections[0]..sections[1]
+            val secondElfAssignments = sections[2]..sections[3]
 
-            max(firstElfRange.count(), secondElfRange.count()) == overlapSections
-        }.count { it }
-    }
+            SectionAssignmentPair(firstElfAssignments, secondElfAssignments)
+        }
 
-    override fun part2(input: String): Int {
-        return input.split("\n").filter { it.isNotEmpty() }.map {pair ->
-            val pair = pair.split(",")
-            val firstElfSections = pair.first().split("-")
-            val secondElfSections = pair.last().split("-")
+}
 
-            val firstElfRange = firstElfSections.first().toInt()..firstElfSections.last().toInt()
-            val secondElfRange = secondElfSections.first().toInt()..secondElfSections.last().toInt()
+class SectionAssignmentPair(private val firstSection: IntRange, private val secondSection: IntRange){
+    fun fullyContained() = max(firstSection.count(), secondSection.count()) == countAssignments()
 
-            val overlapSections = (firstElfRange.toSet() + secondElfRange.toSet()).size
+    fun overlapped() = (firstSection + secondSection).count() != countAssignments()
 
-           firstElfRange.count() + secondElfRange.count() != overlapSections
-        }.count { it }
-    }
+    private fun countAssignments() = (firstSection + secondSection).toSet().size
 
 }
 
