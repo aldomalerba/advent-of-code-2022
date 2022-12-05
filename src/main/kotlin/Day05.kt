@@ -10,33 +10,46 @@ class Day05 : Parts {
     override fun part2(input: String) = moveStacks(input, 2)
 
     private fun moveStacks(input: String, part: Int): String {
-        val stacks = mutableMapOf<Char, MutableList<Char>>()
 
-        val inputParts = input.split("\n\n")
-        val part1 = inputParts[0].split("\n")
-        val part2 = inputParts[1].split("\n").filter { it.isNotEmpty() }
-        val indexes = part1.last().mapIndexedNotNull { index, c -> if (c == ' ') null else c to index }
-        part1.dropLast(1).reversed().map { row ->
-            indexes.forEach {
-                val element = row[it.second]
-                if (element != ' ') {
-                    if (stacks.contains(it.first)) stacks[it.first]!!.add(element) else stacks.put(
-                        it.first,
-                        mutableListOf(element)
-                    )
-                }
-            }
-        }
+        val inputParts = input.split("\n\n").map { it.split("\n").filter { it.isNotEmpty() } }
+        val firstInputPart = inputParts.first()
+        val secondInputPart = inputParts.last()
 
-        val commands = part2.map { it.split("move ", "from ", "to ").takeLast(3) }
+        val stacks = stacks(firstInputPart)
+        val commands = commands(secondInputPart)
 
         commands.forEach { command ->
-            val take = stacks[command[1].trim()[0]]!!.takeLast(command[0].trim().toInt())
-            (take.indices).forEach { _ -> stacks[command[1].trim()[0]]!!.removeLast() }
-            stacks[command[2].trim()[0]]!!.addAll(if(part == 1) take.reversed() else take)
+            val cratesToMove = command[0].toInt()
+            val from = command[1][0]
+            val to = command[2][0]
+
+            val take = stacks[from]!!.takeLast(cratesToMove)
+            (1..cratesToMove).forEach { _ -> stacks[from]!!.removeLast() }
+            stacks[to]!!.addAll(if(part == 1) take.reversed() else take)
         }
 
         return stacks.toSortedMap().map { it.value.last() }.joinToString("")
+    }
+
+    private fun commands(inputParts: List<String>) =
+        inputParts.map { it.split("move ", "from ", "to ").takeLast(3).map { it.trim() } }
+
+    private fun stacks(firstInputPart: List<String>): MutableMap<Char, MutableList<Char>> {
+        val indexes = firstInputPart.last().mapIndexedNotNull { index, c -> if (c != ' ') c to index else null }.toMap()
+
+        return firstInputPart.dropLast(1).reversed().fold(mutableMapOf()) { acc, row ->
+            indexes.forEach {
+                val element = row[it.value]
+                if (element != ' ') {
+                    if (acc.contains(it.key)) {
+                        acc[it.key]!!.add(element)
+                    } else {
+                        acc[it.key] = mutableListOf(element)
+                    }
+                }
+            }
+            acc
+        }
     }
 
 }
@@ -49,6 +62,6 @@ fun main() {
         println(day.part1(input))
         println(day.part2(input))
     } catch (e: FileNotFoundException) {
-        println("Day04 file needs to be created in the src folder.")
+        println("Day05 file needs to be created in the src folder.")
     }
 }

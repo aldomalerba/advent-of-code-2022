@@ -7,6 +7,7 @@ fun main() {
         ::Day02 to "Day02",
         ::Day03 to "Day03",
         ::Day04 to "Day04",
+        ::Day05 to "Day05",
     )
 
     days.forEach { dayToName ->
