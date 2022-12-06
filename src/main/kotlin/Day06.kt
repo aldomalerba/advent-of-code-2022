@@ -10,7 +10,7 @@ class Day06 : Parts {
     override fun part2(input: String) = input.indexFirstMarkerOfSize(14)
 
     private fun String.indexFirstMarkerOfSize(size: Int) =
-        this.windowed(size).indexOfFirst { it.toList().distinct().count() == size } + size
+        this.windowed(size).indexOfFirst { it.toSet().size == size } + size
 }
 
 
