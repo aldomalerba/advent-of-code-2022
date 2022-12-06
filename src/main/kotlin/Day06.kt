@@ -1,14 +1,16 @@
 import java.io.FileNotFoundException
 
 /**
- *
+ * --- Day 6: Tuning Trouble ---
  */
 class Day06 : Parts {
-    override fun part1(input: String) =
-        input.windowed(4).indexOfFirst { it.toList().distinct().count() == 4 } + 4
 
-    override fun part2(input: String) =
-        input.windowed(14).indexOfFirst { it.toList().distinct().count() == 14 } + 14
+    override fun part1(input: String) = input.indexFirstMarkerOfSize(4)
+
+    override fun part2(input: String) = input.indexFirstMarkerOfSize(14)
+
+    private fun String.indexFirstMarkerOfSize(size: Int) =
+        this.windowed(size).indexOfFirst { it.toList().distinct().count() == size } + size
 }
 
 
