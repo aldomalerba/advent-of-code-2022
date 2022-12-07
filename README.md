@@ -17,7 +17,7 @@ In this repository, I'm about to provide solutions for the Advent of Code[^aoc] 
 |            Day 4            | :white_check_mark: | :white_check_mark: | [Source](src/main/kotlin/Day04.kt) |
 |            Day 5            | :white_check_mark: | :white_check_mark: | [Source](src/main/kotlin/Day05.kt) |
 |            Day 6            | :white_check_mark: | :white_check_mark: | [Source](src/main/kotlin/Day06.kt) |
-|            Day 7            |       |   |                                    |
+|            Day 7            | :white_check_mark: | :white_check_mark: | [Source](src/main/kotlin/Day07.kt) |
 |            Day 8            |       |   |                                    |
 |            Day 9            |       |   |                                    |
 |           Day 10            |       |   |                                    |
