@@ -6,49 +6,40 @@ import java.io.FileNotFoundException
 class Day07 : Parts {
 
     override fun part1(input: String): Int {
-        val tree = directoriesSizes(input)
-
-        return tree.filter { it.value < 100000 }.values.sum()
+        return directoriesSizes(input).filter { it.value < 100000 }.values.sum()
     }
 
     override fun part2(input: String): Int {
         val tree = directoriesSizes(input)
-        val spaceNeeded = 30000000 - (70000000 - tree.get("root")!!)
+        val spaceNeeded = 30000000 - (70000000 - tree["root"]!!)
         return tree.filter { it.value > spaceNeeded }.minOf { it.value }
     }
 
     private fun directoriesSizes(input: String): Map<String, Int> {
-        val tree = mutableMapOf<String, Int>()
+        val dirSizes = mutableMapOf<String, Int>()
 
-        val lines = input.lines().filter { it.isNotEmpty() }
+        val lines = input.lines().filterNot { it.isEmpty() || it == "$ ls" }.drop(1)
         val path = mutableListOf("root")
-        var isDescribe = false
 
-        lines.drop(1).forEach {
-            if (it == "$ cd ..") {
-                isDescribe = false
-                path.removeLast()
-            } else if (it == "$ cd /") {
-                path.clear()
-                path.add("root")
-                isDescribe = false
-            } else if (it.startsWith("$ cd")) {
-                path.add(it)
-                isDescribe = false
-            }
+        lines.forEach {
+            if (it.startsWith("$")) {
+                when (it) {
+                    "$ cd .." -> path.removeLast()
+                    else -> path.add(it)
+                }
+            } else {
+                (path.indices).forEach {index ->
+                    val pathName = path.take(index + 1).joinToString("/")
 
-            if (it == "$ ls") {
-                isDescribe = true
-            } else if (isDescribe) {
-                path.forEachIndexed { index, _ ->
-                    val value = tree.getOrPut(path.take(index + 1).joinToString("/")) { 0 }
-                    if (!it.startsWith("dir")) {
-                        tree[path.take(index + 1).joinToString("/")] = value + it.split(" ").first().toInt()
+                    val name = it.split(" ").first()
+                    if (name != "dir") {
+                        dirSizes[pathName] = dirSizes.getOrPut(pathName) { 0 } + name.toInt()
                     }
                 }
             }
+
         }
-        return tree
+        return dirSizes
     }
 }
 
