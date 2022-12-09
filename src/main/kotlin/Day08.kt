@@ -8,10 +8,10 @@ class Day08 : Parts {
             else row.mapIndexed { treeIndex, tree ->
 
                 val visible = if (treeIndex == 0 || treeIndex == row.length - 1) true
-                else tree > (0..rowIndex -1).maxOf { lines[it][treeIndex] } ||
-                        tree > (0..treeIndex -1).maxOf { lines[rowIndex][it] } ||
-                        tree > (rowIndex+1..lines.size-1).maxOf { lines[it][treeIndex] } ||
-                        tree > (treeIndex+1..row.length-1).maxOf { lines[rowIndex][it] }
+                else tree > (0 until rowIndex).maxOf { lines[it][treeIndex] } ||
+                        tree > (0 until treeIndex).maxOf { lines[rowIndex][it] } ||
+                        tree > (rowIndex+1 until lines.size).maxOf { lines[it][treeIndex] } ||
+                        tree > (treeIndex+1 until row.length).maxOf { lines[rowIndex][it] }
                 println("$tree at $rowIndex , $treeIndex is visible $visible")
                 visible
             }.count{ it }
@@ -27,8 +27,8 @@ class Day08 : Parts {
 
                 else (((rowIndex - 1 downTo 0).indexOfFirst { lines[it][treeIndex] >= tree }.takeIf { it != -1 } ?: (rowIndex - 1)) + 1) *
                         (((treeIndex -1 downTo 0).indexOfFirst { lines[rowIndex][it] >= tree }.takeIf { it != -1 } ?: (treeIndex - 1))+ 1) *
-                        (((rowIndex+1..lines.size-1).indexOfFirst { lines[it][treeIndex] >= tree}.takeIf { it != -1 } ?: ((rowIndex+1..lines.size-1).count() - 1)) +1) *
-                        (((treeIndex+1..row.length-1).indexOfFirst { lines[rowIndex][it] >= tree }.takeIf { it != -1 } ?: ((treeIndex+1..row.length-1).count() -1)) +1)
+                        (((rowIndex+1 until lines.size).indexOfFirst { lines[it][treeIndex] >= tree}.takeIf { it != -1 } ?: ((rowIndex+1..lines.size-1).count() - 1)) +1) *
+                        (((treeIndex+1 until row.length).indexOfFirst { lines[rowIndex][it] >= tree }.takeIf { it != -1 } ?: ((treeIndex+1..row.length-1).count() -1)) +1)
                 println("$tree at $rowIndex , $treeIndex is visible $visible")
                 visible
             }.maxOf { it }
@@ -44,6 +44,6 @@ fun main() {
         println(day.part1(input))
         println(day.part2(input))
     } catch (e: FileNotFoundException) {
-        println("Day06 file needs to be created in the src folder.")
+        println("Day08 file needs to be created in the src folder.")
     }
 }
