@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions.*
 class Day09Test {
     private val day = Day09()
     private val input = readResourceText("Day09_test")
+    private val largerInput = readResourceText("Day09_larger_test")
 
     @Test
     fun `part 1`() {
@@ -17,6 +18,13 @@ class Day09Test {
     fun `part 2`() {
         val result = day.part2(input)
 
-        assertEquals(8,result)
+        assertEquals(1,result)
+    }
+
+    @Test
+    fun `part 2 larger input`() {
+        val result = day.part2(largerInput)
+
+        assertEquals(36,result)
     }
 }
