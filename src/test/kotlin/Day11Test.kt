@@ -14,7 +14,6 @@ class Day11Test {
         assertEquals(10605,result)
     }
 
-    @Disabled
     @Test
     fun `part 2`() {
         val result = day.part2(input)
