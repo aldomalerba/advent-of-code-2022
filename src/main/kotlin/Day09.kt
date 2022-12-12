@@ -47,42 +47,10 @@ class Day09 : Parts {
                     val tmp = rope[i]
                     var (x,y) = rope[i]
                     rope[i] = when (direction) {
-                        "R" ->{
-                            if(tailX == headX){
-                                x to prevPositions.second
-                            } else if(tailX< headX){
-                                x+1 to prevPositions.second
-                            }else{
-                                prevPositions
-                            }
-                        }
-                        "L" -> {
-                            if(tailX == headX){
-                                x to prevPositions.second
-                            } else if(tailX> headX){
-                                x-1 to prevPositions.second
-                            }else{
-                                prevPositions
-                            }
-                        }
-                        "D" -> {
-                            if(tailY == headY){
-                                prevPositions.first to y
-                            } else if(tailY> headY){
-                                prevPositions.first to y-1
-                            }else{
-                                prevPositions
-                            }
-                        }
-                        else -> {
-                            if(tailY == headY){
-                                prevPositions.first to y
-                            } else if(tailY< headY){
-                                prevPositions.first to y+1
-                            }else{
-                                prevPositions
-                            }
-                        }
+                        "R" -> x+1 to prevPositions.second
+                        "L" -> x-1 to prevPositions.second
+                        "D" -> prevPositions.first to y-1
+                        else -> prevPositions.first to y+1
                     }
                     prevPositions = tmp
                 }
