@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException
+import java.time.temporal.TemporalAccessor
 
 class Day09 : Parts {
     override fun part1(input: String): Int {
@@ -39,6 +40,7 @@ class Day09 : Parts {
             rope[rope.size - 1] = headX to headY
 
             (rope.dropLast(1).size - 1 downTo 0).mapIndexed { index, i ->
+
                 var (tailX, tailY) = rope[i]
                 var (headX, headY) = rope[i+1]
 
@@ -46,12 +48,23 @@ class Day09 : Parts {
                 if (!isAdjacent) {
                     val tmp = rope[i]
                     var (x,y) = rope[i]
-                    rope[i] = when (direction) {
-                        "R" -> x+1 to prevPositions.second
-                        "L" -> x-1 to prevPositions.second
-                        "D" -> prevPositions.first to y-1
-                        else -> prevPositions.first to y+1
+
+                    if(headX > tailX){
+                        x++
                     }
+                    if(headX < tailX){
+                        x--
+                    }
+
+                    if(headY > tailY) {
+                        y++
+                    }
+                    if(headY < tailY) {
+                        y--
+                    }
+
+                    rope[i] = x to y
+
                     prevPositions = tmp
                 }
 
@@ -60,7 +73,7 @@ class Day09 : Parts {
             tailPositions.add(rope.first())
         }
 
-
+        println(tailPositions)
         return tailPositions.size
     }
 
