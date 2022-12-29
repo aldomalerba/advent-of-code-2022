@@ -11,7 +11,7 @@ class Day11Test {
     fun `part 1`() {
         val result = day.part1(input)
 
-        assertEquals(10605,result)
+        assertEquals(10605L,result)
     }
 
     @Test
